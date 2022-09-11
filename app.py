@@ -148,31 +148,33 @@ def add():
 @app.route('/addevent',methods=['POST','GET'])
 def addevent():
     if request.method == "POST":
- 
-        host_id = Host.query.filter_by(organization=request.form['host']).first().host_id
-        date=(request.form['date'])[:10] # date format issues...
-        hours=request.form['hours']
-        name=request.form['name']
-        location=request.form['location']
-        description=request.form['desc']
-        new=Event(host_id=host_id,date=date,hours=hours,name=name,location=location,description=description)
         try:
-            db.session.add(new)
-            db.session.commit()
-            new_hosts_event=Hosts(host_id=new.host_id,
-            event_id=new.event_id)
-            db.session.add(new_hosts_event)
-            db.session.commit()
+            host_id = Host.query.filter_by(organization=request.form['host']).first().host_id
+            if host_id is not None:
+                date=(request.form['date'])[:10] # date format issues...
+                hours=request.form['hours']
+                name=request.form['name']
+                location=request.form['location']
+                description=request.form['desc']
+                new=Event(host_id=host_id,date=date,hours=hours,name=name,location=location,description=description)
+                try:
+                    db.session.add(new)
+                    db.session.commit()
+                    new_hosts_event=Hosts(host_id=new.host_id,
+                    event_id=new.event_id)
+                    db.session.add(new_hosts_event)
+                    db.session.commit()
+                except:
+                    print(f'error on {new.name}')
         except:
-            print(f'error on {new.name}')
-
-        return render_template('addevent.html')
+            msg='No such organization!'
+            return render_template('addevent.html',msg=msg)
     else:
         return render_template('addevent.html')
 
 @app.route('/',methods=['POST','GET'])
 def index():
-    return render_template('home.html')
+    return render_template('login.html')
 
 @app.route('/showevents',methods=['POST','GET'])
 def showevents():
@@ -180,8 +182,7 @@ def showevents():
     names = []
     #print(hosts)
     events = db.session.query(Event,Host).filter(Event.host_id==Host.host_id)#Event.query.order_by(Event.date_created)
-    # for event,host in events:
-    #     print(event.date,host.organization)
+
     return render_template("showevents.html",events=events)
 
 @app.route('/attend/<int:id>')
