@@ -112,13 +112,21 @@ def generate():
         db.session.commit()
     except:
         db.session.rollback()
-    try:
-        new_event=Event(host_id=1,hours=1,date='2022-10-02',name='name or title of event',location='location of event',description='description about it')
-        db.session.add(new_event)
-        db.session.commit()
-        msg+='Generated Event'
-    except:
-        print('error generating event')
+
+
+
+    event = [
+        [1,	'2022-09-10',	'2022-09-10',	3,	'Program Volunteers',	'1360 Royal Palm Square Blvd, Fort Myers, FL 33919',	'Read to children in our Kids Zone, greet members at the membership services desk, coach one of our youth sports teams and more.'],
+        [1, '2022-09-10',	'2022-09-10',	3,	'Special Event Volunteers',	'1360 Royal Palm Square Blvd, Fort Myers, FL 33919',	'In small groups or as individuals these volunteers perform tasks during a special event such as 5k races, Healthy Kids Day, or a golf tournament.']
+    ]
+    for e in event:
+        try:
+            new_event=Event(host_id=1,date=e[2],hours=e[3],name=e[4],location=e[5],description=e[6])
+            db.session.add(new_event)
+            db.session.commit()
+            msg+='Generated Event'
+        except:
+            print('error generating event')
     
     
     return render_template('home.html',msg=msg)
@@ -207,6 +215,8 @@ def attend(id):
 @app.route('/viewhistory/<int:id>')
 def viewhistory(id):
     #return 'hi'
+    if not id:
+        id =1
     events = db.session.query(Event,Attends,Host).filter(Event.event_id==Attends.event_id,Host.host_id==Event.host_id,Attends.volunteer_num==id)
     for e,a,h in events:
         print(e.name,a.volunteer_num,h.organization)
@@ -219,3 +229,10 @@ def new():
     for e,a,h in events:
         print(e.name,a.volunteer_num,h.organization)
     return render_template('new.html', events=events)
+
+@app.route('/data')
+def data(): 
+    events = db.session.query(Event,Host).filter(Event.host_id==Host.host_id)
+    for e,h in events:
+        print(f'e.name {e.name}')
+    return render_template('data.html',events=events)
