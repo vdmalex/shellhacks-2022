@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+<div class="container">
+    <h1>add</h1>
+    <br>
+    <form action="/addevent" METHOD="POST">
+        <input type="text" placeholder="Host" name="host">
+        <input type="date" name="date">
+        <input type="text" placeholder="hours" name="hours">
+        <input type="text" placeholder="Name" name="name">
+        <input type="text" placeholder="Location" name="location">
+        <input type="text" placeholder="description" name="desc">
+        <input type="submit" value="Add Event!" class="btn btn-secondary">       
+
+    </form>
+    <br><br>
+    <h4>
+
+    </h4>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+<link rel="stylesheet" href="styles.css">
+
+<body>
+    <div class="flex-item">
+        {% for event,attends,host in events %}
+
+        <div class="link panel">
+            <div class="link-options">
+                <button>
+                    <h1 class="header">
+                        {{ event.host_id }}
+                 
+                    </h1>
+                    {{ host.organization }}
+                    {{ event.date }}
+                    {{ event.hours }}
+                    {{ event.name }}
+                    {{ event.location }} 
+                    {{ event.desc }} 
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+</body>
+</html>
+
+{% endblock %}

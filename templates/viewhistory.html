@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+<div class="container">
+    <h1>View History</h1>
+    <br>
+
+    <br><br>
+    {% for event,attends,host in events %}
+    <p>
+        {{ event.host_id }}
+        {{ host.organization }}
+        {{ event.date }}
+        {{ event.hours }}
+        {{ event.name }}
+        {{ event.location }} 
+        {{ event.desc }} 
+        
+    </p>    
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

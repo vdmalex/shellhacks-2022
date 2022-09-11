@@ -1,0 +1,15 @@
+html {
+  background: #8da0b1;
+  background-color: #8da0b1;
+}
+
+/* Title Section */
+
+#home {
+  height: 100%;
+  background: #8da0b1;
+}
+
+.center {
+  vertical-align: middle;
+}

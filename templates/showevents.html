@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+<div class="container">
+    <h1>Current Events</h1>
+    <br>
+
+    <br><br>
+    {% for event,host in events %}
+    <p>
+        {{ event.host_id }}
+        {{ host.organization }}
+        {{ event.date }}
+        {{ event.hours }}
+        {{ event.name }}
+        {{ event.location }} 
+        {{ event.desc }} 
+        <a href="/attend/{{ event.event_id }}" class="btn btn-outline-secondary btn-sm">attend</a>
+      
+    </p>    
+    {% endfor %}
+</div>
+{% endblock %}
