@@ -236,3 +236,7 @@ def data():
     for e,h in events:
         print(f'e.name {e.name}')
     return render_template('data.html',events=events)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')

@@ -6,6 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link rel="icon" type="image/x-icon" href="https://www.iconsdb.com/icons/preview/blue/circle-xxl.png">
 <style>
+
   .button {
     display: block;
     width: 115px;
@@ -35,11 +36,36 @@
   .white:hover{
     color:black;
   }
+ .container {
+  display:flex;
+  flex-direction: column;
+  max-width:50vw;
+ }
+ .flex-item {
+  display:flex;
+  flex-direction:column;
+  padding:0;
+  margin:0;
+ }
+ .data-container {
+  background:#e5fbff;
+  border-radius:10px;
+  padding:15px 15px 15px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+ }
+ .title{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+ }
+ .margin-3{
+  margin:3px;
+ }
 </style>
 </head>
 <!-- navbar-expand-lg navbar-dark bg-dark nav-bg -->
-<nav class="navbar nav-bg" style="position:fixed; width:100%">
-  <a class="navbar-brand white" href="#">Volunteer Now!</a>
+<nav class="navbar nav-bg nav-padding" >
+  <a class="navbar-brand white" href="{{ url_for('about') }}">Volunteer Now!</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -57,19 +83,30 @@
 
 {% block body %}
 <!-- main -->
-<body style="position:relative; margin-top:200px">
-{% for event,host in events %}
+<body style="padding-top:0px">
+  <br>
+  <h1 class="title display-2" style="margin-bottom:25px;">You have completed&nbsp;<span style="font-weight:900">11 hours</span>&nbsp;of community service!</h1>
 
-<div class="container" style="margin-bottom:100px">
-    <p>
-    {{ event.host_id }}
-    {{ host.organization }}
-    {{ event.date }}
-    {{ event.hours }}
+{% for event,host in events %}
+<div class="container data-container" style="margin-bottom:100px">
+  <h2 class="flex-item display-3">
+    {{ host.organization}}
+  </h2>
+  <h3 class="flex-item">
     {{ event.name }}
-    {{ event.location }} 
-    {{ event.desc }} 
-    </p>
+  </h3>
+  <p class="flex-item margin-3">
+    {{ event.date }}
+  </p>
+  <p class="flex-item margin-3">
+  {{ event.hours }} hours
+  </p>
+  <p class="flex-item margin-3">
+    {{ event.location }}
+  </p>
+  <p class="flex-item lead margin-3">
+    {{ event.description }}
+  </p>
 </div>
 
 {% endfor %}
